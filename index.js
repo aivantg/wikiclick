@@ -3,7 +3,7 @@ const createTrie = require('autosuggest-trie')
 const requests = require('./requests.js')
 const app = express()
 const URL = require('url').URL
-const port = 3000
+const port = process.env.PORT || 3000
 var path = require("path");
 
 var mysql = require('mysql')
@@ -58,3 +58,4 @@ app.post('/autocomplete', (req, res) => {
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
