@@ -1,0 +1,11 @@
+{
+  "name": "wikiworld-web",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "autosuggest-trie": "^2.1.1",
+    "express": "^4.16.4",
+    "mysql": "^2.16.0"
+  }
+}
