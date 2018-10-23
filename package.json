@@ -7,7 +7,7 @@
     "autosuggest-trie": "^2.1.1",
     "express": "^4.16.4",
     "mysql": "^2.16.0"
-  }
+  },
   "scripts": { 
     "start": "node index.js"
   }
