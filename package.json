@@ -4,11 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "autosuggest-trie": "^2.1.1",
     "express": "^4.16.4",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "typography": "^0.16.17"
   },
-  "scripts": { 
-    "start": "node index.js"
+  "scripts": {
+    "start": "node app.js"
   }
 }

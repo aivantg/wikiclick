@@ -32,6 +32,7 @@
     </style>
   </head>
   <body>
+    <h1>Hi this is a heading </h1>
     <div class="container">
       <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
@@ -46,6 +47,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
     <script>
+      // import Typography from 'typography'
+      // const typography = new Typography({
+      //   baseFontSize: '18px',
+      //   baseLineHeight: 1.666,
+      //   headerFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
+      //   bodyFontFamily: ['Georgia', 'serif'],
+      //   // See below for the full list of options.
+      // });
+      // typography.injectStyles()
+
 
       function queryServer(query, cb) {
         $.ajax('autocomplete?' + $.param({query: query}), {
