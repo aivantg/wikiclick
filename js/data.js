@@ -17,7 +17,7 @@ function cleanseID(id) {
 }
 
 function createURL(id) {
-  return "https://www.wikipedia.org/wiki/" + id
+  return "/detail?id=" + id + "&name=" + cleanseID(id)
 }
 
 function numberWithCommas(x){

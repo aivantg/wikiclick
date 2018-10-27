@@ -38,12 +38,10 @@ exports.getWikiPrefixMatches = function(query, callback) {
  * @param callback: callback to pass the results JSON object(s) back
  */
 function getJSON(options, onResult) {
-    console.log("rest::getJSON");
 
     var port = options.port == 443 ? https : http;
     var req = port.request(options, function(res) {
         var output = '';
-        console.log(options.host + ':' + res.statusCode);
         res.setEncoding('utf8');
 
         res.on('data', function (chunk) {
