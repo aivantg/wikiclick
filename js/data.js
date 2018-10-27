@@ -1,8 +1,8 @@
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-  host     :  'wikiworld-0.cwlhu4azzdsr.us-west-1.rds.amazonaws.com',
-  user     :  'wikiworld',
-  password :  'agwikipass23',
+  host     :  process.env.DB_HOST,
+  user     :  process.env.DB_USER,
+  password :  process.env.DB_PASS,
   database : 'wikiworld',
   port     : 3306
 });
@@ -44,7 +44,7 @@ function buildQuery(show=['src.title', 'count', 'dest.title'], type='link', dest
   }
   query += "ORDER BY count " + order + ' '
   query += "LIMIT " + limit
-  console.log("Built Query: " + query)
+  // console.log("Built Query: " + query)
   return query;
 }
 

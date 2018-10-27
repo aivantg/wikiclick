@@ -1,6 +1,9 @@
+require('dotenv').config()
+
 const express = require('express')
 const network = require('./js/network.js')
 const data = require ('./js/data.js')
+
 
 var path = require("path");
 
