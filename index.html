@@ -30,16 +30,40 @@
         font-style: normal;
       }
     </style>
+    <title>WikiClick</title>
   </head>
   <body>
-    <h1>Hi this is a heading </h1>
     <div class="container">
+
       <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
+          <br/><br/><br/>
+          <h1>Welcome to WikiClick </h1>
+          <p>
+            Have you ever found yourself clicking through wikipedia, seeing where random pages might take you? You're not alone! In fact, millions of people use Wikipedia every day. And behind the scenes, Wikipedia actually tracks how many clicks are being made to and from <i>every</i> page!
+            <br/><br/>
+            This data is publicly available! But unfortunately, it's not super convenient to access. They're stuck in gigabytes of files. Wikiclick exists to help make the data more accessible.
+          </p>
+          <br/>
           <form action="#" class="form">
-            <h3>Basic example</h3>
-            <input class="form-control" id="search-input" name="contacts" type="text" placeholder='Search by name' />
+            <h3>Enter a page below and learn more!</h3>
+            <input class="form-control" id="search-input" name="contacts" type="text" placeholder="Find a Wikipedia Page" />
           </form>
+          <br/>
+          <h3>How does it work?</h3>
+          <p>
+            Interested in learning more about the dataset? Find details here on <a href="https://meta.wikimedia.org/wiki/Research:Wikipedia_clickstream">Wikimedia's Website</a>
+            <br/>
+            Want to learn how this website was made? Check out <a href="https://www.github.com/aivantg/wikiworld">the github</a> for this project!
+          </p>
+          <br/>
+          <h3>For Developers</h3>
+          <p>
+            Want to get the data in a JSON format? Play around with the following routes: "/topClicksTo", "/topClicksFrom", "/searchHits", "/topMonth". Each takes a single query parameter of a wikipedia page ID, which is always the end of the wikipedia URL. For example: <a href="/topClicksTo?id=United_States">Click here for a sample request </a>
+          </p>
+          <br/>
+          <p>Built with love by <a href="https://aivantg.github.io">Aivant Goyal</a>!</p>
+
         </div>
       </div>
     </div>
@@ -47,20 +71,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
     <script>
-      // import Typography from 'typography'
-      // const typography = new Typography({
-      //   baseFontSize: '18px',
-      //   baseLineHeight: 1.666,
-      //   headerFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
-      //   bodyFontFamily: ['Georgia', 'serif'],
-      //   // See below for the full list of options.
-      // });
-      // typography.injectStyles()
-
 
       function queryServer(query, cb) {
         $.ajax('autocomplete?' + $.param({query: query}), {
-          type: "POST",
+          type: "GET",
           success: function(data) {
             cb(data);
           },
@@ -82,9 +96,8 @@
           }
         }
       ]).on('autocomplete:selected', function(event, suggestion, dataset) {
-        console.log(suggestion, dataset);
-        window.location.href = '/query?id=' + suggestion.id;
-      });
+        window.location.href = '/detail?id=' + suggestion.id + "&name=" + suggestion.name;
+       });
     </script>
   </body>
 </html>

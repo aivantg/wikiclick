@@ -1,15 +1,18 @@
 var http = require("http");
 var https = require("https");
+const URL = require('url').URL
 
-const prefixOptions = {
-    host: 'en.wikipedia.org',
-    port: 443,
-    path: '/w/api.php?action=opensearch&search=' + query,
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-};
+const prefixOptions = function(query) {
+  return {
+      host: 'en.wikipedia.org',
+      port: 443,
+      path: '/w/api.php?action=opensearch&search=' + query,
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  };
+}
 
 /**
  * getWikiPrefixMatches: Get's and parses result from wikipedia search query
@@ -17,7 +20,7 @@ const prefixOptions = {
  * @param callback: callback to send back array of {name:'', id:''} objects
  */
 exports.getWikiPrefixMatches = function(query, callback) {
-  getJSON(prefixOptions, function (statusCode, data) {
+  getJSON(prefixOptions(query), function (statusCode, data) {
     var results = [];
     if(data.length != 0) {
       for (i = 0; i < data[1].length; i++) {
@@ -27,7 +30,7 @@ exports.getWikiPrefixMatches = function(query, callback) {
       }
     }
     callback(results)
-  }
+  });
 }
 /**
  * getJSON:  REST get request returning JSON object(s)

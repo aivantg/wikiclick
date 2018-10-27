@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>
+      .algolia-autocomplete {
+        width: 100%;
+      }
+      .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+        width: 100%;
+      }
+      .algolia-autocomplete .aa-hint {
+        color: #999;
+      }
+      .algolia-autocomplete .aa-dropdown-menu {
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid #999;
+        border-top: none;
+      }
+      .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+        cursor: pointer;
+        padding: 5px 4px;
+      }
+      .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+        background-color: #B2D7FF;
+      }
+      .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+        font-weight: bold;
+        font-style: normal;
+      }
+    </style>
+    <title>WikiClick</title>
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <br/><br/><br/>
+          <h1 class="page_name">Detail Page</h1>
+          <a id="page_link" href=""><h4>Official Wikipedia Page</h4></a>
+          <a href="/"><h5>Home</h5></a>
+          <br/>
+          <p>
+            Below are some statistics for the wikipedia page on "<span class="page_name"></span>"! The numbers correspond to the number of clicks people have made over the last year (specifically, November 2017 to September 2018)
+          </p>
+          <br/>
+          <p>
+            <b>Total Search Hits In Past Year:</b> <span id="searchhits"></span>
+            <br/><b>Most Popular Month:</b> <span id="topmonth"></span>
+            <br/><br/>
+            <b>Top Ten Pages People Clicked From To Get <i>To</i> "<span class="page_name"></span>"</b>
+            <ul id="clickedto">
+            </ul>
+            <br/>
+            <b>Top Ten Pages People Clicked To <i>From</i> "<span class="page_name"></span>"</b>
+            <ul id="clickedfrom">
+            </ul>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
+    <script>
+      var urlParams = new URLSearchParams(window.location.search);
+      var id = urlParams.get("id");
+      var name = urlParams.get ("name");
+      $(".page_name").text(name)
+      $("#page_link").attr("href", "https://www.wikipedia.org/wiki/" + id);
+
+      var clickedToHTML = "";
+      var clickedFromHTML = "";
+      $.ajax('topClicksTo?' + $.param({id: id}), {
+        type: "GET",
+        success: function(data) {
+          for(item in data) {
+            clickedToHTML += '<li><a href="' + data[item].url + '">' + data[item].title + "</a>: " + data[item].count;
+          }
+          $('#clickedto').html(clickedToHTML);
+        },
+        error: function() {
+          console.log("Error, sad");
+        }
+      });
+
+      $.ajax('topClicksFrom?' + $.param({id: id}), {
+        type: "GET",
+        success: function(data) {
+          for(item in data) {
+            clickedFromHTML += '<li><a href="' + data[item].url + '">' + data[item].title + "</a>: " + data[item].count;
+          }
+          $('#clickedfrom').html(clickedFromHTML);
+        },
+        error: function() {
+          console.log("Error, sad");
+        }
+      });
+
+      $.ajax('searchHits?' + $.param({id: id}), {
+        type: "GET",
+        success: function(data) {
+          $('#searchhits').text(data[0].count)
+        },
+        error: function() {
+          console.log("Error, sad");
+        }
+      });
+      $.ajax('topMonth?' + $.param({id: id}), {
+        type: "GET",
+        success: function(data) {
+          console.log(data)
+          $('#topmonth').text(data[0].month.substring(0, 10) + ", Clicks: " + data[0].count)
+        },
+        error: function() {
+          console.log("Error, sad");
+        }
+      });
+
+
+
+    </script>
+  </body>
+</html>

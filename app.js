@@ -1,7 +1,6 @@
 const express = require('express')
 const network = require('./js/network.js')
 const data = require ('./js/data.js')
-const URL = require('url').URL
 
 var path = require("path");
 
@@ -22,8 +21,22 @@ app.get('/topClicksFrom', (req, res) => {
   data.getTopClicksFromID(id, (results) => res.send(results))
 });
 
+app.get('/searchHits', (req, res) => {
+  var id = req.query["id"];
+  data.getSearchHits(id, (results) => res.send(results))
+});
+
+app.get('/topMonth', (req, res) => {
+  var id = req.query["id"]
+  data.getTopMonth(id, (results) => res.send(results))
+});
+
+app.get('/detail', (req, res) => {
+  res.sendFile(path.join(__dirname + '/detail.html'))
+})
+
 // Autocomplete Query Lookup
-app.post('/autocomplete', (req, res) => {
+app.get('/autocomplete', (req, res) => {
   var query = req.query["query"]
   network.getWikiPrefixMatches(query, (results) => res.send(results))
 });
