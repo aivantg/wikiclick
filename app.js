@@ -38,9 +38,10 @@ app.get('/topMonth', (req, res) => {
 app.get('/detail', (req, res) => {
   var id = req.query["id"]
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  iplocation('ip', [], (error, ip_data) => {
+  iplocation(ip, [], (error, ip_data) => {
     if(error) {
       console.log("Error finding data for ipaddress: " + ip);
+      console.log("Error Message: " + error.message)
       ip_data = {ip: ip, city: 'nil', longitude: 0.0, latitude: 0.0};
     }
     data.trackVisit(id, ip_data);
