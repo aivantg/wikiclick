@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const network = require('./js/network.js')
 const data = require ('./js/data.js')
+const iplocation = require("iplocation").default;
 
 
 var path = require("path");
@@ -37,7 +38,13 @@ app.get('/topMonth', (req, res) => {
 app.get('/detail', (req, res) => {
   var id = req.query["id"]
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  data.trackVisit(id, ip);
+  iplocation('ip', [], (error, ip_data) => {
+    if(error) {
+      console.log("Error finding data for ipaddress: " + ip);
+      ip_data = {ip: ip, city: 'nil', longitude: 0.0, latitude: 0.0};
+    }
+    data.trackVisit(id, ip_data);
+  });
   res.sendFile(path.join(__dirname + '/detail.html'))
 })
 

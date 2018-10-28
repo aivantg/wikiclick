@@ -93,12 +93,13 @@ exports.getTopMonth = function(id, callback) {
   });
 }
 
-exports.trackVisit = function(id, ip_address) {
+// Track analytics of where traffic is coming from (potential spam protection)
+exports.trackVisit = function(id, ip_data) {
   var key = process.env.INSERT_KEY_DEV;
   if (process.env.PROD == 'true') {
     key = process.env.INSERT_KEY_PROD;
   }
-  let query = 'INSERT INTO history (page_title, visitDate, ip_address, auth_key) VALUES ("' + id +'", NOW(), "' + ip_address + '", "' + key + '")'
+  let query = 'INSERT INTO history (page_title, visitDate, ip_address, city, lat, lon, auth_key) VALUES ("' + id +'", NOW(), "' + ip_data.ip + '", "' + ip_data.city + '", '+ ip_data.latitude + ', ' + ip_data.longitude + ', "' + key + '")'
   connection.query(query, function(error, rows, fields) {
     if(error) {
       console.log("Error tracking visit");
