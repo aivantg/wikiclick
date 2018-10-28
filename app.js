@@ -35,6 +35,8 @@ app.get('/topMonth', (req, res) => {
 });
 
 app.get('/detail', (req, res) => {
+  var id = req.query["id"]
+  data.trackVisit(id);
   res.sendFile(path.join(__dirname + '/detail.html'))
 })
 

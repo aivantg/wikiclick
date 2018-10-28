@@ -93,6 +93,16 @@ exports.getTopMonth = function(id, callback) {
   });
 }
 
+exports.trackVisit = function(id) {
+  let query = 'INSERT INTO history (page_title, visitDate) VALUES ("' + id +'", NOW())'
+  connection.query(query, function(error, rows, fields) {
+    if(error) {
+      console.log("Error tracking visit");
+      console.log(error);
+    }
+  });
+}
+
 exports.shutdown = function() {
   connection.close()
 }
