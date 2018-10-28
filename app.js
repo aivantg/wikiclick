@@ -43,6 +43,8 @@ app.get('/detail', (req, res) => {
       console.log("Error finding data for ipaddress: " + ip);
       console.log("Error Message: " + error.message)
       ip_data = {ip: ip, city: 'nil', longitude: 0.0, latitude: 0.0};
+    } else {
+      console.log("Successfully got IP data for request to " + id);
     }
     data.trackVisit(id, ip_data);
   });
