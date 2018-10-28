@@ -36,7 +36,8 @@ app.get('/topMonth', (req, res) => {
 
 app.get('/detail', (req, res) => {
   var id = req.query["id"]
-  data.trackVisit(id);
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  data.trackVisit(id, ip);
   res.sendFile(path.join(__dirname + '/detail.html'))
 })
 
