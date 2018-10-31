@@ -135,7 +135,6 @@
       $.ajax('topMonth?' + $.param({id: id}), {
         type: "GET",
         success: function(data) {
-          console.log(data)
           $('#topmonth').text(data[0].month.substring(0, 10) + ", Clicks: " + data[0].count)
         },
         error: function() {
