@@ -89,7 +89,7 @@
     <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
     <script>
       var urlParams = new URLSearchParams(window.location.search);
-      var id = urlParams.get("id");
+      var id = urlParams.get("id").split(' ').join('_')
       var name = urlParams.get("name");
       if(name == "null"){
         name = id.split('_').join(' ')

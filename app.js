@@ -47,7 +47,7 @@ app.get('/topMonth', (req, res) => {
 });
 
 app.get('/detail', (req, res) => {
-  var id = req.query["id"]
+  var id = req.query["id"].split(' ').join('_')
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   iplocation(ip, [], (error, ip_data) => {
     if(error) {
