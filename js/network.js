@@ -49,12 +49,14 @@ exports.getWikiSummary = function(id, callback) {
   getJSON(summaryPrefixOptions(id), function(statusCode, data) {
     data = data.query.pages
     summary = data[Object.keys(data)[0]].extract
-    summary = summary.split(' ( listen);').join('')
-    summary = summary.split('\n')[0]
-    summary_sentences = summary.split('.')
-    if (summary_sentences.length > 10) {
-      summary = summary_sentences.slice(0, 6).join('.')
-      summary += "."
+    if(summary != null) {
+      summary = summary.split(' ( listen);').join('')
+      summary = summary.split('\n')[0]
+      summary_sentences = summary.split('.')
+      if (summary_sentences.length > 10) {
+        summary = summary_sentences.slice(0, 6).join('.')
+        summary += "."
+      }
     }
     callback(summary)
   });

@@ -13,7 +13,13 @@ const app = express()
 const port = process.env.PORT || 3000
 
 
-app.get('/', (req, res) => res.sendFile(path.join(__dirname+'/index.html')));
+app.get('/', (req, res) => {
+  if(req.query["id"]) {
+    res.redirect('/detail?id=' + encodeURIComponent(req.query["id"]));
+  } else {
+    res.sendFile(path.join(__dirname+'/index.html'));
+  }
+});
 
 app.get('/summary', (req, res) => {
     var id = req.query["id"]
