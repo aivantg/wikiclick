@@ -24,21 +24,25 @@
           <h1 class="page_name">Detail Page</h1>
           <a id="page_link" href=""><h4>Official Wikipedia Page</h4></a>
           <br/>
+          <b>Summary</b>
+          <br/>
           <p id="page_summary"></p>
           <br/>
           <p>
-            Below are some statistics for the wikipedia page on "<span class="page_name"></span>"! The numbers correspond to the number of clicks people have made over the last year (specifically, November 2017 to September 2018)
+            Below are some statistics for the wikipedia page on <span class="page_name"></span>! The numbers correspond to the number of clicks people have made over the last year (specifically, November 2017 to September 2018)
           </p>
           <br/>
           <p>
             <b>Total Search Hits In Past Year:</b> <span id="searchhits"></span>
             <br/><b>Most Popular Month:</b> <span id="topmonth"></span>
             <br/><br/>
-            <b>Top Ten Pages People Clicked From To Get <i>To</i> "<span class="page_name"></span>"</b>
+            <b>Top ten source pages that people came to "<span class="page_name"></span>" from:</b>
+            <br/><i>Example: (page name) -&gt; "<span class="page_name"></span>"</i><p></p>
             <ul id="clickedto">
             </ul>
             <br/>
-            <b>Top Ten Pages People Clicked To <i>From</i> "<span class="page_name"></span>"</b>
+            <b>Top ten destination pages that people went to from "<span class="page_name"></span>":</b>
+            <br/><i>Example: "<span class="page_name"></span>" -&gt; (page name)</i><p></p>
             <ul id="clickedfrom">
             </ul>
           </p>
@@ -52,7 +56,10 @@
     <script>
       var urlParams = new URLSearchParams(window.location.search);
       var id = urlParams.get("id");
-      var name = urlParams.get ("name");
+      var name = urlParams.get("name");
+      if(name == "null"){
+        name = id.split('_').join(' ')
+      }
       $(".page_name").text(name)
       $("#page_link").attr("href", "https://www.wikipedia.org/wiki/" + id);
 
@@ -62,7 +69,7 @@
         type: "GET",
         success: function(data) {
           for(item in data) {
-            clickedToHTML += '<li><a href="' + data[item].url + '">' + data[item].title + "</a>: " + data[item].count;
+            clickedToHTML += '<li><a href="' + data[item].url + '">' + data[item].title + "</a>: " + data[item].count + ' clicks';
           }
           $('#clickedto').html(clickedToHTML);
         },
@@ -75,7 +82,7 @@
         type: "GET",
         success: function(data) {
           for(item in data) {
-            clickedFromHTML += '<li><a href="' + data[item].url + '">' + data[item].title + "</a>: " + data[item].count;
+            clickedFromHTML += '<li><a href="' + data[item].url + '">' + data[item].title + "</a>: " + data[item].count + ' clicks';
           }
           $('#clickedfrom').html(clickedFromHTML);
         },
@@ -107,7 +114,6 @@
       $.ajax('summary?' + $.param({id: id}), {
         type: "GET",
         success: function(summary) {
-          console.log(summary);
           $('#page_summary').text(summary.split('\n')[0])
         }
       })
