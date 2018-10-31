@@ -13,6 +13,34 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <title>WikiClick</title>
+    <style>
+      .algolia-autocomplete {
+        width: 100%;
+      }
+      .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+        width: 100%;
+      }
+      .algolia-autocomplete .aa-hint {
+        color: #999;
+      }
+      .algolia-autocomplete .aa-dropdown-menu {
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid #999;
+        border-top: none;
+      }
+      .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+        cursor: pointer;
+        padding: 5px 4px;
+      }
+      .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+        background-color: #B2D7FF;
+      }
+      .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+        font-weight: bold;
+        font-style: normal;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -20,7 +48,11 @@
       <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
           <br/><br/><br/>
-          <a href="/"><h5>Home</h5></a>
+          <a href="/" style="float: left;"><h5>Home</h5></a>
+          <form action="#" class="form" style="float: right;" >
+            <input class="form-control" id="search-input" name="id" type="text" placeholder="Search Again!" />
+          </form>
+          <br/>
           <h1 class="page_name">Detail Page</h1>
           <a id="page_link" href=""><h4>Official Wikipedia Page</h4></a>
           <br/>
@@ -117,6 +149,32 @@
           $('#page_summary').text(summary.split('\n')[0])
         }
       })
+
+      function queryServer(query, cb) {
+        $.ajax('autocomplete?' + $.param({query: query}), {
+          type: "GET",
+          success: function(data) {
+            cb(data);
+          },
+          error: function() {
+            console.log("Error, sad");
+          }
+        });
+      }
+
+      autocomplete('#search-input', { hint: false }, [
+        {
+          source: queryServer,
+          displayKey: 'name',
+          templates: {
+            suggestion: function(suggestion) {
+              return suggestion.name;
+            }
+          }
+        }
+      ]).on('autocomplete:selected', function(event, suggestion, dataset) {
+        window.location.href = '/detail?id=' + suggestion.id + "&name=" + suggestion.name;
+       });
 
 
 
