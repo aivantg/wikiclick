@@ -15,6 +15,11 @@ const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname+'/index.html')));
 
+app.get('/summary', (req, res) => {
+    var id = req.query["id"]
+    network.getWikiSummary(id, (summary) => res.send(summary));
+});
+
 app.get('/topClicksTo', (req, res) => {
   var id = req.query["id"];
   data.getTopClicksToID(id, (results) => res.send(results))

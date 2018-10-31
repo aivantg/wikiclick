@@ -2,11 +2,23 @@ var http = require("http");
 var https = require("https");
 const URL = require('url').URL
 
-const prefixOptions = function(query) {
+const autoCompletePrefixOptions = function(query) {
   return {
       host: 'en.wikipedia.org',
       port: 443,
       path: '/w/api.php?action=opensearch&search=' + query,
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  };
+}
+
+const summaryPrefixOptions = function(id) {
+  return {
+      host: 'en.wikipedia.org',
+      port: 443,
+      path: '/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=' + id,
       method: 'GET',
       headers: {
           'Content-Type': 'application/json'
@@ -20,7 +32,7 @@ const prefixOptions = function(query) {
  * @param callback: callback to send back array of {name:'', id:''} objects
  */
 exports.getWikiPrefixMatches = function(query, callback) {
-  getJSON(prefixOptions(query), function (statusCode, data) {
+  getJSON(autoCompletePrefixOptions(query), function (statusCode, data) {
     var results = [];
     if(data.length != 0) {
       for (i = 0; i < data[1].length; i++) {
@@ -30,6 +42,15 @@ exports.getWikiPrefixMatches = function(query, callback) {
       }
     }
     callback(results)
+  });
+}
+
+exports.getWikiSummary = function(id, callback) {
+  getJSON(summaryPrefixOptions(id), function(statusCode, data) {
+    data = data.query.pages
+    summary = data[Object.keys(data)[0]].extract
+    summary = summary.split(' ( listen);').join('')
+    callback(summary)
   });
 }
 /**

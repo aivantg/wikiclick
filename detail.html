@@ -24,6 +24,8 @@
           <h1 class="page_name">Detail Page</h1>
           <a id="page_link" href=""><h4>Official Wikipedia Page</h4></a>
           <br/>
+          <p id="page_summary"></p>
+          <br/>
           <p>
             Below are some statistics for the wikipedia page on "<span class="page_name"></span>"! The numbers correspond to the number of clicks people have made over the last year (specifically, November 2017 to September 2018)
           </p>
@@ -101,6 +103,14 @@
           console.log("Error, sad");
         }
       });
+
+      $.ajax('summary?' + $.param({id: id}), {
+        type: "GET",
+        success: function(summary) {
+          console.log(summary);
+          $('#page_summary').text(summary.split('\n')[0])
+        }
+      })
 
 
 
