@@ -54,8 +54,8 @@ exports.getWikiSummary = function(id, callback) {
     summary_sentences = summary.split('.')
     if (summary_sentences.length > 10) {
       summary = summary_sentences.slice(0, 6).join('.')
+      summary += "."
     }
-    summary += "."
     callback(summary)
   });
 }
