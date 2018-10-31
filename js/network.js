@@ -6,7 +6,7 @@ const autoCompletePrefixOptions = function(query) {
   return {
       host: 'en.wikipedia.org',
       port: 443,
-      path: '/w/api.php?action=opensearch&search=' + query,
+      path: '/w/api.php?action=opensearch&search=' + encodeURIComponent(query),
       method: 'GET',
       headers: {
           'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ const summaryPrefixOptions = function(id) {
   return {
       host: 'en.wikipedia.org',
       port: 443,
-      path: '/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=' + id,
+      path: '/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=' + encodeURIComponent(id),
       method: 'GET',
       headers: {
           'Content-Type': 'application/json'
