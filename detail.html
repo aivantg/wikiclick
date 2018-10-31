@@ -103,7 +103,7 @@
         type: "GET",
         success: function(data) {
           if(data.length == 0) {
-            $('#detail_container').html('<h3>Hm, we couldn\'t find the page: "' + name + '"</h3><br/>It either doesn\'t exist or doesn\'t have enough click data. Try searching for a different one!')
+            $('#detail_container').html('<h3>Hm, we couldn\'t find the page: "' + name + '"</h3><br/>It either doesn\'t exist or doesn\'t have enough click data available yet. Try searching for a different one!')
           } else {
             for(item in data) {
               clickedToHTML += '<li><a href="' + data[item].url + '">' + data[item].title + "</a>: " + data[item].count + ' clicks';
