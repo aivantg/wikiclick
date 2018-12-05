@@ -6,11 +6,15 @@ var connection = mysql.createConnection({
   database : 'wikiworld',
   port     : 3306
 });
-//,
-
-
-connection.connect()
+connection.connect(function(err) {
+  if(err) {
+    console.log("Sad, error")
+  }else {
+    console.log("Woooo!")
+  }
+})
 console.log("Connected to remote database")
+
 
 function cleanseID(id) {
   return id.split('_').join(' ');
